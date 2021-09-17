@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/asana/login', '\App\Http\Controllers\AsanaController@index')->name('home');
+Route::get('/asana/callback', '\App\Http\Controllers\AsanaController@callback')->name('asana.callback');
+Route::get('/asana/main', '\App\Http\Controllers\AsanaController@main')->name('asana.main');
+Route::get('/asana/projects/{id}', '\App\Http\Controllers\AsanaController@projects')->name('asana.projects');
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
