@@ -1,55 +1,22 @@
 <?php
 
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\Request;
+$ASANA_API_ENDPOINT_URL='https://app.asana.com/api/1.0';
+$ASANA_LOGIN_ENDPOINT_URL='https://app.asana.com/-/oauth_authorize';
+$ASANA_TOKEN_ENDPOINT_URL='https://app.asana.com/-/oauth_token';
+$ASANA_CLIENT_ID='1201073560846677';
+$ASANA_CLIENT_SECRET='0666ad5a0cd5e624ab96fc79384941c5';
+$ASANA_CALLBACK_URL='https://asanaconnect1.ogatism.com/callback.php';
 
-define('LARAVEL_START', microtime(true));
+$query = http_build_query([
+	'client_id' => $ASANA_CLIENT_ID,
+	'redirect_uri' => $ASANA_CALLBACK_URL,
+	'response_type' => 'code',
+]);
+?>
 
-/*
-|--------------------------------------------------------------------------
-| Check If The Application Is Under Maintenance
-|--------------------------------------------------------------------------
-|
-| If the application is in maintenance / demo mode via the "down" command
-| we will load this file so that any pre-rendered content can be shown
-| instead of starting the framework, which could cause an exception.
-|
-*/
 
-if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
-    require __DIR__.'/../storage/framework/maintenance.php';
-}
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| this application. We just need to utilize it! We'll simply require it
-| into the script here so we don't need to manually load our classes.
-|
-*/
 
-require __DIR__.'/../vendor/autoload.php';
+<a href="<?php echo $ASANA_LOGIN_ENDPOINT_URL . '?' . $query; ?>">Login</a>
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request using
-| the application's HTTP kernel. Then, we will send the response back
-| to this client's browser, allowing them to enjoy our application.
-|
-*/
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
-
-$kernel = $app->make(Kernel::class);
-
-$response = tap($kernel->handle(
-    $request = Request::capture()
-))->send();
-
-$kernel->terminate($request, $response);
